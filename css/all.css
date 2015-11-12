@@ -1,0 +1,179 @@
+html {
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    background-color: #091A2E;
+    font: 14px "Courier New", Courier, monospace;
+    color: #99B0BE;
+    line-height: 1.2;
+}
+
+.group:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+
+/* General reset */
+
+form,
+fieldset {
+    margin: 0;
+    padding: 0;
+    border-style: none;
+}
+
+img {
+    outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    border-style: none;
+    display: block;
+}
+
+input,
+select,
+textarea {
+    vertical-align: middle;
+    font: 100% "Courier New", Courier, monospace;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    color: #f00;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+input:focus {
+    outline: none;
+}
+
+.wrapper {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.board {
+    display: none;
+}
+
+.info-block {
+    margin: 0 auto;
+    padding: 40px 125px;
+    overflow: hidden;
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 44px;
+    line-height: 1.2;
+    color: #ED9848;
+    float: left;
+}
+
+.players {
+    float: left;
+    font-size: 20px;
+    margin-left: 90px;
+    padding-left: 30px;
+}
+
+.players span {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.players span:first-child {
+    color: #ED9848;
+}
+
+.status {
+    float: left;
+    margin-left: 40px;
+    font-size: 20px;
+    padding: 15px 30px;
+    border-left: 2px dashed;
+}
+
+.startMenu {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: auto;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 0;
+    &:before {
+        height: 100%;
+        display: inline-block;
+        vertical-align: middle;
+        content: '';
+    }
+}
+
+.startMenu-box {
+    margin-top: 13%;
+    display: inline-block;
+    white-space: normal;
+    vertical-align: middle;
+    text-align: center;
+    padding: 20px;
+    background-color: #730512;
+    border-radius: 10px;
+    border: 2px solid #B43F59;
+}
+
+.menu li {
+    font-size: 20px;
+    color: #ED9848;
+    font-weight: bold;
+    padding: 10px 30px;
+    border-radius: 10px;
+}
+
+.menu li:hover {
+    background-color: #B43F59;
+    cursor: pointer;
+}
+
+
+canvas {
+    display: block;
+    
+    margin: 0 auto;
+    /*border: 1px solid #ED9848;*/
+}
