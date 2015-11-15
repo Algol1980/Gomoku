@@ -50,10 +50,10 @@ var listener = function (event) {
 canvas.addEventListener('click', listener, false);
 
 
-  $on(qs("#endGameJS"), "click", function(event) {
-    var position = getCursorPosition(event);
-    checkPosition(position);
-  });
+  // $on(qs("#endGameJS"), "click", function(event) {
+  //   var position = getCursorPosition(event);
+  //   checkPosition(position);
+  // });
 
   endGame.onclick = function(event) {
     event.preventDefault();
