@@ -20,18 +20,30 @@
                 <div class="status" id="statusJS">{{status}}</div>
             </div>
             <canvas>
-                <!-- <p>You're browser does not support the required functionality to play this game.</p>
-                <p>Please update to a modern browser such as <a href="www.google.com/chrome/‎">Google Chrome</a> to play.</p> -->
+                <p>You're browser does not support the required functionality to play this game.</p>
+                <p>Please update to a modern browser such as <a href="www.google.com/chrome/‎">Google Chrome</a> to play.</p>
             </canvas>
         </div>
-        <div class="startMenu" id="startMenuJS">
-          <div class="startMenu-box">
+        <div class="modal" id="startMenuJS">
+          <div class="startMenu box">
             <ul class="menu">
               <li id="startGameTwo">Играть вдвоем</li>
+              <li class="accContainer">
+                <form action=""><label for="">Введите размер доски (от 5 до 25) </label><input type="text" id="boardSizeInput"></form>
+              </li>
               <li id="startGameAI">Играть с AI</li>
               <li id="selecBoardSize">Размер доски</li>
               <li id="selecPlayersName">Имена игроков</li>
               <li id="exitGame">Покинуть игру</li>
+            </ul>
+          </div>
+        </div>
+      <div class="modal" id="endGameJS">
+          <div class="endGame box" >
+          <h2 id="endGameStatusJs">Закончить игру?</h2>
+            <ul class="menu">
+              <li id="Ok" >Да</li>
+              <li id="No">Нет</li>
             </ul>
           </div>
         </div>
