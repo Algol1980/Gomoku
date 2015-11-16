@@ -15,7 +15,7 @@
             <div class="info-block" id="info-blockJS">
                 <h1>Пять в ряд</h1>
                 <div class="players" id="playersJS">
-                    <span>{{player1}}</span><span>{{player2}}</span>
+                    <span id="playerF">{{player1}}</span><span id="playerS">{{player2}}</span>
                 </div>
                 <div class="status" id="statusJS">{{status}}</div>
             </div>
@@ -28,12 +28,18 @@
           <div class="startMenu box">
             <ul class="menu">
               <li id="startGameTwo">Играть вдвоем</li>
-              <li class="accContainer">
-                <form action=""><label for="">Введите размер доски (от 5 до 25) </label><input type="text" id="boardSizeInput"></form>
-              </li>
               <li id="startGameAI">Играть с AI</li>
-              <li id="selecBoardSize">Размер доски</li>
-              <li id="selecPlayersName">Имена игроков</li>
+              <li id="selecBoardSize" class="accord">Размер доски</li>
+                  <div class="accContainer">
+                    <form action="#"><label for="boardSizeInput">Введите размер доски <span>(от 5 до 25) </span></label><input type="number" min="5" max="25" id="boardSizeInput" size="5" placeholder="19" value="19"></form>
+                  </div>
+              <li id="selecPlayersName" class="accord">Имена игроков</li>
+              <div class="accContainer">
+                    <form action="#">
+                      <label for="">Крестики:</label><input type="text" id="playerNameCross" size="15" value="Player1">
+                      <label for="">Нолики:</label><input type="text" id="playerNameNull" size="15" value="Player2">
+                    </form>
+                  </div>
               <li id="exitGame">Покинуть игру</li>
             </ul>
           </div>

@@ -1,43 +1,78 @@
 var app = (function(global) {
   var settings = {
-    "playerFirstName": "Player1",
-    "playerSecondName": "Player2",
-    "boardSizeWidth": 19,
-    "boardSizeHeight": 19,
+    "playerFirstName": qs('#playerNameCross').value,
+    "playerSecondName": qs('#playerNameNull').value,
+    "boardSizeWidth": qs('#boardSizeInput').value,
+    "boardSizeHeight": qs('#boardSizeInput').value
   }
+
+
+  $bindModelInput(settings,'playerFirstName', qs('#playerNameCross'));
+  $bindModelInput(settings,'playerSecondName', qs('#playerNameNull'));
+  $bindModelInput(settings,'boardSizeWidth', qs('#boardSizeInput'));
+
+    qs('#playerNameCross').onchange = function () {settings.playerFirstName = settings.playerFirstName; 
+                                                   qs("#playerF").innerHTML = settings.playerFirstName;};
+    qs('#playerNameNull').onchange = function () {settings.playerSecondName = settings.playerSecondName;   
+                                                  qs("#playerS").innerHTML = settings.playerSecondName;};
+    qs('#boardSizeInput').onchange = function () {settings.boardSizeWidth = settings.boardSizeWidth; 
+                                                  settings.boardSizeHeight = settings.boardSizeWidth;};
+
+ console.log(settings);
+
+  qs("#playerF").innerHTML = settings.playerFirstName;
+  qs("#playerS").innerHTML = settings.playerSecondName;
+  // qs("#statusJS").innerHTML = settings;
+
   var check = "x";
 
   var cellSize = 25;
-  var boardWidth = 1 + cellSize * settings["boardSizeWidth"];
-  var boardHeight = 1 + cellSize * settings["boardSizeHeight"];
+
 
   var canvas = qs("canvas");
   var ctx = canvas.getContext("2d");
-  canvas.width = boardWidth;
-  canvas.height = boardHeight;
+  var boardWidth, boardHeight;
 
 
   var board = qs("#boardJS");
   var startMenu = qs("#startMenuJS");
   var endGame = qs("#endGameJS");
   var startGameTwo = qs("#startGameTwo");
+  var accordeonJS = qsa(".accContainer");
 
   var pauseListening = false;
 
   var cellsArray = [];
 
 
+
   $on(startGameTwo, "click", function() {
     qs("#startMenuJS").style.display = "none";
     qs("#boardJS").style.display = "block";
+     console.log(settings);
     startNewGame();
   });
 
-  // $on(canvas, "click", function(event) {
-  //     var position = getCursorPosition(event);
-  //     checkPosition(position);
+  // $on(accordeonJS, "click", function() {
 
   // });
+
+
+    var acc = qs(".startMenu"),
+        liElement = acc.querySelectorAll(".accord"),
+        size = liElement.length, i, liNode;
+
+    for (i = 0; i < size; i++) {
+        liNode = liElement[i];
+        liNode.nextElementSibling.classList.add("closed");
+        console.log(liNode.nextElementSibling);
+
+        liNode.onclick = function () {
+            var li = this;
+            li.nextElementSibling.classList.toggle("closed");
+        }
+    }
+
 
 var listener = function (event) {
   if (pauseListening) {
@@ -152,6 +187,10 @@ function startNewGame() {
   };
 
   function drawBoard() {
+  boardWidth = 1 + cellSize * settings["boardSizeWidth"];
+  boardHeight = 1 + cellSize * settings["boardSizeHeight"];
+  canvas.width = boardWidth;
+  canvas.height = boardHeight;
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.beginPath();
 

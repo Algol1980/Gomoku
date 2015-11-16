@@ -48,6 +48,14 @@
 		return window.$parent(element.parentNode, tagName);
 	};
 
+	window.$bindModelInput = function (obj, property, domElem) {
+  Object.defineProperty(obj, property, {
+    get: function() { return domElem.value; }, 
+    set: function(newValue) { domElem.value = newValue;},
+    configurable: true
+      });
+}
+
 	// Allow for looping on nodes by chaining:
 	// qsa('.foo').forEach(function () {})
 	NodeList.prototype.forEach = Array.prototype.forEach;
