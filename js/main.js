@@ -1,9 +1,12 @@
 var app = (function(global) {
+  var check = "X";
   var settings = {
     "playerFirstName": qs('#playerNameCross').value,
     "playerSecondName": qs('#playerNameNull').value,
     "boardSizeWidth": qs('#boardSizeInput').value,
-    "boardSizeHeight": qs('#boardSizeInput').value
+    "boardSizeHeight": qs('#boardSizeInput').value,
+    "status": " Ходит: " + check 
+
   }
 
 
@@ -17,14 +20,21 @@ var app = (function(global) {
                                                   qs("#playerS").innerHTML = settings.playerSecondName;};
     qs('#boardSizeInput').onchange = function () {settings.boardSizeWidth = settings.boardSizeWidth; 
                                                   settings.boardSizeHeight = settings.boardSizeWidth;};
+    // qs('#statusJS').onchange = function () { qs("#statusJS").innerHTML = settings.status; }                                                
 
  console.log(settings);
 
   qs("#playerF").innerHTML = settings.playerFirstName;
   qs("#playerS").innerHTML = settings.playerSecondName;
+  // qs("#statusJS").innerHTML = settings["status"];
+  // qs("#statusJS").innerHTML = settings;
   // qs("#statusJS").innerHTML = settings;
 
-  var check = "x";
+  function setCheck (newCheck) {
+    check = newCheck;
+    qs("#statusJS").innerHTML = "Ходит: " + check;
+
+  }
 
   var cellSize = 25;
 
@@ -133,16 +143,16 @@ function startNewGame() {
       return;
     }
     cellsArray[pos[0]][pos[1]] = check;
-    if (check == 'x') {
+    if (check == 'X') {
       drawCross(pos);
       console.log(pos);
       isWin(pos);
-      check = 'o';
+      setCheck('O');
     } else {
       drawNull(pos);
       console.log(pos);
       isWin(pos);
-      check = 'x';
+      setCheck('X');
     }
   }
 
