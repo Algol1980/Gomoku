@@ -5,32 +5,32 @@ var app = (function(global) {
     "playerSecondName": qs('#playerNameNull').value,
     "boardSizeWidth": qs('#boardSizeInput').value,
     "boardSizeHeight": qs('#boardSizeInput').value,
-    "status": " Ходит: " + check 
+    "status": " Ходит: " + check
 
   }
 
 
-  $bindModelInput(settings,'playerFirstName', qs('#playerNameCross'));
-  $bindModelInput(settings,'playerSecondName', qs('#playerNameNull'));
-  $bindModelInput(settings,'boardSizeWidth', qs('#boardSizeInput'));
+  $bindModelInput(settings, 'playerFirstName', qs('#playerNameCross'));
+  $bindModelInput(settings, 'playerSecondName', qs('#playerNameNull'));
+  $bindModelInput(settings, 'boardSizeWidth', qs('#boardSizeInput'));
 
-    qs('#playerNameCross').onchange = function () {settings.playerFirstName = settings.playerFirstName; 
-                                                   qs("#playerF").innerHTML = settings.playerFirstName;};
-    qs('#playerNameNull').onchange = function () {settings.playerSecondName = settings.playerSecondName;   
-                                                  qs("#playerS").innerHTML = settings.playerSecondName;};
-    qs('#boardSizeInput').onchange = function () {settings.boardSizeWidth = settings.boardSizeWidth; 
-                                                  settings.boardSizeHeight = settings.boardSizeWidth;};
-    // qs('#statusJS').onchange = function () { qs("#statusJS").innerHTML = settings.status; }                                                
-
- console.log(settings);
+  qs('#playerNameCross').onchange = function() {
+    settings.playerFirstName = settings.playerFirstName;
+    qs("#playerF").innerHTML = settings.playerFirstName;
+  };
+  qs('#playerNameNull').onchange = function() {
+    settings.playerSecondName = settings.playerSecondName;
+    qs("#playerS").innerHTML = settings.playerSecondName;
+  };
+  qs('#boardSizeInput').onchange = function() {
+    settings.boardSizeWidth = settings.boardSizeWidth;
+    settings.boardSizeHeight = settings.boardSizeWidth;
+  };
 
   qs("#playerF").innerHTML = settings.playerFirstName;
   qs("#playerS").innerHTML = settings.playerSecondName;
-  // qs("#statusJS").innerHTML = settings["status"];
-  // qs("#statusJS").innerHTML = settings;
-  // qs("#statusJS").innerHTML = settings;
 
-  function setCheck (newCheck) {
+  function setCheck(newCheck) {
     check = newCheck;
     qs("#statusJS").innerHTML = "Ходит: " + check;
 
@@ -56,71 +56,58 @@ var app = (function(global) {
 
 
 
+
   $on(startGameTwo, "click", function() {
     qs("#startMenuJS").style.display = "none";
     qs("#boardJS").style.display = "block";
-     console.log(settings);
     startNewGame();
   });
 
-  // $on(accordeonJS, "click", function() {
 
-  // });
+  var acc = qs(".startMenu"),
+    liElement = acc.querySelectorAll(".accord"),
+    size = liElement.length,
+    i, liNode;
 
+  for (i = 0; i < size; i++) {
+    liNode = liElement[i];
+    liNode.nextElementSibling.classList.add("closed");
 
-    var acc = qs(".startMenu"),
-        liElement = acc.querySelectorAll(".accord"),
-        size = liElement.length, i, liNode;
-
-    for (i = 0; i < size; i++) {
-        liNode = liElement[i];
-        liNode.nextElementSibling.classList.add("closed");
-        console.log(liNode.nextElementSibling);
-
-        liNode.onclick = function () {
-            var li = this;
-            li.nextElementSibling.classList.toggle("closed");
-        }
+    liNode.onclick = function() {
+      var li = this;
+      li.nextElementSibling.classList.toggle("closed");
     }
+  }
 
 
-var listener = function (event) {
-  if (pauseListening) {
+  var listener = function(event) {
+    if (pauseListening) {
       return false;
     }
-   var position = getCursorPosition(event);
+    var position = getCursorPosition(event);
     checkPosition(position);
-};
+  };
 
-canvas.addEventListener('click', listener, false);
+  canvas.addEventListener('click', listener, false);
 
-
-  // $on(qs("#endGameJS"), "click", function(event) {
-  //   var position = getCursorPosition(event);
-  //   checkPosition(position);
-  // });
 
   endGame.onclick = function(event) {
     event.preventDefault();
     var target = event.target;
     if (target.id == 'ok') {
-        startNewGame();
+      startNewGame();
     }
     if (target.id == 'no') {
       window.location = "http://javascript.ru"
     }
   }
-
-
-  // $delegate(qs("#ok"), qs("#endGameJS"), "click", startNewGame);
-
-function startNewGame() {
+  
+  function startNewGame() {
     drawBoard();
     createCellsArray();
-}
+  }
 
   function getCursorPosition(e) {
-    /* returns Cell with .row and .column properties */
     var x;
     var y;
     if (e.pageX != undefined && e.pageY != undefined) {
@@ -145,12 +132,10 @@ function startNewGame() {
     cellsArray[pos[0]][pos[1]] = check;
     if (check == 'X') {
       drawCross(pos);
-      console.log(pos);
       isWin(pos);
       setCheck('O');
     } else {
       drawNull(pos);
-      console.log(pos);
       isWin(pos);
       setCheck('X');
     }
@@ -183,10 +168,7 @@ function startNewGame() {
     ctx.stroke();
   }
 
-
-
   function createCellsArray() {
-    // cellsArray = new Array([settings["boardSizeWidth"]],[settings["boardSizeHeight"]])
     for (var i = 0; i < settings["boardSizeWidth"]; i++) {
       cellsArray[i] = [];
       for (var j = 0; j < settings["boardSizeHeight"]; j++) {
@@ -197,10 +179,10 @@ function startNewGame() {
   };
 
   function drawBoard() {
-  boardWidth = 1 + cellSize * settings["boardSizeWidth"];
-  boardHeight = 1 + cellSize * settings["boardSizeHeight"];
-  canvas.width = boardWidth;
-  canvas.height = boardHeight;
+    boardWidth = 1 + cellSize * settings["boardSizeWidth"];
+    boardHeight = 1 + cellSize * settings["boardSizeHeight"];
+    canvas.width = boardWidth;
+    canvas.height = boardHeight;
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.beginPath();
 
@@ -232,8 +214,8 @@ function startNewGame() {
     left < 0 ? left = 0 : left;
 
     bottom > settings["boardSizeWidth"] - 5 ? bottom = settings["boardSizeWidth"] - 1 : bottom;
-    right > settings["boardSizeWidth"] - 5 ? right = settings["boardSizeWidth"] - 1 : right;
-    console.log(top, left, bottom, right);
+    left > settings["boardSizeWidth"] - 5 ? left = settings["boardSizeWidth"] - 1 : left;
+    console.log("Top: " + top, "left: " + left, "bottom: " + bottom, "right: " + right);
 
     for (var i = 0; i < settings["boardSizeWidth"] - 1; i++) {
 
@@ -254,25 +236,38 @@ function startNewGame() {
         return;
       }
     }
-
+    var tmpX, tmpY, rtmpX, rtmpY;
     for (var i = 0; i < 9; i++) {
-      if (cellsArray[left + i][top + i] == undefined) {
-        break;
+      if (left + i >= 18) {
+        tmpX = 18;
+        rtmpX = 18;
+      } else {
+        tmpX = left + i;
+        rtmpX = left + i;
       }
-      if (cellsArray[left + i][top + i] == check) {
+      if (top + i >= 18) {
+        tmpY = 18;
+      } else {
+        tmpY = top + i
+      }
+      if (bottom - i >= 18) {
+        rtmpY = 18;
+      } else {
+        rtmpY = bottom - i
+      }
+
+      console.log("tmpX: " + tmpX, "tmpY: " + tmpY, "rtmpX: " + rtmpX, "rtmpY: " + rtmpY);
+      if (cellsArray[tmpX][tmpY] == check) {
         diag++;
       } else {
         diag = 0;
       }
-            if (diag == 5 || rdiag == 5) {
+      if (diag == 5 || rdiag == 5) {
         showModalEndgame();
         return;
       }
-    
-      if (cellsArray[left + i][bottom - i] == undefined) {
-        break;
-      }
-      if (cellsArray[left + i][bottom - i] == check) {
+
+      if (cellsArray[rtmpX][rtmpY] == check) {
         rdiag++;
       } else {
         rdiag = 0;
@@ -281,7 +276,7 @@ function startNewGame() {
         showModalEndgame();
         return;
       }
-      // console.log(diag, rdiag);
+      console.log(diag, rdiag);
     }
   }
 
@@ -292,13 +287,5 @@ function startNewGame() {
     qs("#boardJS").style.display = "none";
     qs("#endGameJS").style.display = "block";
   };
-
-
-  
-
-
-
-
-
 
 })(window);
