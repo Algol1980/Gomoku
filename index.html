@@ -40,16 +40,17 @@
                       <label for="">Нолики:</label><input type="text" id="playerNameNull" size="15" value="Player2">
                     </form>
                   </div>
-              <li id="exitGame">Покинуть игру</li>
+              <!-- <li id="exitGame">Покинуть игру</li> -->
             </ul>
           </div>
         </div>
       <div class="modal" id="endGameJS">
           <div class="endGame box" >
-          <h2 id="endGameStatusJs">Закончить игру?</h2>
+          <h2 id="endGameStatusJs">{{status}}</h2>
+          <h3>Закончить игру?</h3>
             <ul class="menu">
-              <li id="Ok" >Да</li>
-              <li id="No">Нет</li>
+              <li id="ok" >Да</li>
+              <li id="no">Нет</li>
             </ul>
           </div>
         </div>

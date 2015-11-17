@@ -9,7 +9,7 @@ var app = (function(global) {
 
   }
 
-
+  qs("#statusJS").innerHTML = "Ходит: " + check;
   $bindModelInput(settings, 'playerFirstName', qs('#playerNameCross'));
   $bindModelInput(settings, 'playerSecondName', qs('#playerNameNull'));
   $bindModelInput(settings, 'boardSizeWidth', qs('#boardSizeInput'));
@@ -36,6 +36,10 @@ var app = (function(global) {
 
   }
 
+  function setWinner(check) {
+    qs("#endGameStatusJs").innerHTML = "Победил: " + check;
+  }
+
   var cellSize = 25;
 
 
@@ -55,11 +59,22 @@ var app = (function(global) {
   var cellsArray = [];
 
 
+  endGame.onclick = function(event) {
+    event.preventDefault();
 
+    var target = event.target;
+    console.log(target);
+    if (target.id == 'ok') {
+      startNewGame();
+    }
+    if (target.id == 'no') {
+      endGame.style.display = "none";
+      startMenu.style.display = "block";
+    }
+  }
 
   $on(startGameTwo, "click", function() {
-    qs("#startMenuJS").style.display = "none";
-    qs("#boardJS").style.display = "block";
+    startMenu.style.display = "none";
     startNewGame();
   });
 
@@ -91,21 +106,27 @@ var app = (function(global) {
   canvas.addEventListener('click', listener, false);
 
 
-  endGame.onclick = function(event) {
-    event.preventDefault();
-    var target = event.target;
-    if (target.id == 'ok') {
-      startNewGame();
-    }
-    if (target.id == 'no') {
-      window.location = "http://javascript.ru"
-    }
-  }
-  
+
+
   function startNewGame() {
+    if (endGame.style.display == "block") {
+      endGame.style.display = "none";
+    }
+    board.style.display = "block";
+    pauseListening = false;
     drawBoard();
     createCellsArray();
   }
+
+
+function showModalEndgame() {
+    setWinner(check);
+    pauseListening = true;
+    canvas.removeEventListener();
+    board.style.display = "none";
+    endGame.style.display = "block";
+
+  };
 
   function getCursorPosition(e) {
     var x;
@@ -280,12 +301,6 @@ var app = (function(global) {
     }
   }
 
-  function showModalEndgame() {
-    pauseListening = true;
-    canvas.removeEventListener();
-    canvas.style.visibility = "hidden";
-    qs("#boardJS").style.display = "none";
-    qs("#endGameJS").style.display = "block";
-  };
+
 
 })(window);

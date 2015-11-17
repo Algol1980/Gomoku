@@ -120,8 +120,15 @@ h1, h2 {
 }
 
 h2 {
+    margin: 0 auto;
     font-size: 30px;
     margin-bottom: 30px;
+}
+
+h3 {
+    font-size: 24px;
+    color: #ED9848;
+    margin-bottom: 20px;
 }
 
 .players {
