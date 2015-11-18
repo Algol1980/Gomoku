@@ -63,7 +63,6 @@ var app = (function(global) {
     event.preventDefault();
 
     var target = event.target;
-    console.log(target);
     if (target.id == 'ok') {
       startNewGame();
     }
@@ -115,11 +114,11 @@ var app = (function(global) {
     board.style.display = "block";
     pauseListening = false;
     drawBoard();
-    createCellsArray();
+    createcellsArray();
   }
 
 
-function showModalEndgame() {
+  function showModalEndgame() {
     setWinner(check);
     pauseListening = true;
     canvas.removeEventListener();
@@ -153,11 +152,15 @@ function showModalEndgame() {
     cellsArray[pos[0]][pos[1]] = check;
     if (check == 'X') {
       drawCross(pos);
-      isWin(pos);
+      if (isWin(pos)) {
+        showModalEndgame();
+      }
       setCheck('O');
     } else {
       drawNull(pos);
-      isWin(pos);
+      if (isWin(pos)) {
+        showModalEndgame();
+      }
       setCheck('X');
     }
   }
@@ -189,7 +192,7 @@ function showModalEndgame() {
     ctx.stroke();
   }
 
-  function createCellsArray() {
+  function createcellsArray() {
     for (var i = 0; i < settings["boardSizeWidth"]; i++) {
       cellsArray[i] = [];
       for (var j = 0; j < settings["boardSizeHeight"]; j++) {
@@ -221,85 +224,54 @@ function showModalEndgame() {
   }
 
 
+  function lineCount(check, pos, dirX, dirY) {
+    var count = 1;
+    var r, c;
+    r = pos[0] + dirX;
+    c = pos[1] + dirY;
+
+    while (r >= 0 && r < settings.boardSizeWidth && c >= 0 && c < settings.boardSizeWidth && cellsArray[r][c] == check) {
+      count++;
+      r += dirX;
+      c += dirY;
+    }
+
+    win_row1 = r - dirX;
+    win_column1 = c - dirY;
+    r = pos[0] - dirX;
+    c = pos[1] - dirY;
+    while (r >= 0 && r < settings.boardSizeWidth && c >= 0 && c < settings.boardSizeWidth && cellsArray[r][c] == check) {
+      count++;
+      r -= dirX;
+      c -= dirY;
+    }
+
+    win_row2 = r + dirX;
+    win_column2 = c + dirY;
+    return count;
+
+  }
+
   function isWin(pos) {
 
-    var diag, rdiag, horizontal, vertical;
-    horizontal = vertical = diag = rdiag = 0;
-    var top, left, bottom, right;
-    top = pos[1] - 4;
-    left = pos[0] - 4;
-    bottom = pos[1] + 4;
-    right = pos[0] + 4;
-    diag = rdiag = 0;
-    top < 0 ? top = 0 : top;
-    left < 0 ? left = 0 : left;
-
-    bottom > settings["boardSizeWidth"] - 5 ? bottom = settings["boardSizeWidth"] - 1 : bottom;
-    left > settings["boardSizeWidth"] - 5 ? left = settings["boardSizeWidth"] - 1 : left;
-    console.log("Top: " + top, "left: " + left, "bottom: " + bottom, "right: " + right);
-
-    for (var i = 0; i < settings["boardSizeWidth"] - 1; i++) {
-
-      if (cellsArray[pos[0]][i] == check) {
-        vertical++;
-      } else {
-        vertical = 0;
-      }
-
-      if (cellsArray[i][pos[1]] == check) {
-        horizontal++;
-      } else {
-        horizontal = 0;
-      }
-
-      if (horizontal == 5 || vertical == 5) {
-        showModalEndgame();
-        return;
-      }
+    if (lineCount(check, pos, 1, 0) >= 5) {
+      return true;
     }
-    var tmpX, tmpY, rtmpX, rtmpY;
-    for (var i = 0; i < 9; i++) {
-      if (left + i >= 18) {
-        tmpX = 18;
-        rtmpX = 18;
-      } else {
-        tmpX = left + i;
-        rtmpX = left + i;
-      }
-      if (top + i >= 18) {
-        tmpY = 18;
-      } else {
-        tmpY = top + i
-      }
-      if (bottom - i >= 18) {
-        rtmpY = 18;
-      } else {
-        rtmpY = bottom - i
-      }
-
-      console.log("tmpX: " + tmpX, "tmpY: " + tmpY, "rtmpX: " + rtmpX, "rtmpY: " + rtmpY);
-      if (cellsArray[tmpX][tmpY] == check) {
-        diag++;
-      } else {
-        diag = 0;
-      }
-      if (diag == 5 || rdiag == 5) {
-        showModalEndgame();
-        return;
-      }
-
-      if (cellsArray[rtmpX][rtmpY] == check) {
-        rdiag++;
-      } else {
-        rdiag = 0;
-      }
-      if (diag == 5 || rdiag == 5) {
-        showModalEndgame();
-        return;
-      }
-      console.log(diag, rdiag);
+    if (lineCount(check, pos, 0, 1) >= 5) {
+      return true;
     }
-  }
+    if (lineCount(check, pos, 1, -1) >= 5) {
+      return true;
+    }
+    if (lineCount(check, pos, 1, 1) >= 5) {
+      return true;
+    } else {
+      win_r1 = -1;
+      return false;
+    }
+
+  } 
+
 
 
 
